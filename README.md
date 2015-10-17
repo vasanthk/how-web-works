@@ -63,7 +63,7 @@ Given below is Webkit's flow:
 
 Parsing: Translating the document to a structure the code can use. The result of parsing is usually a tree of nodes that represent the structure of the document.
  
-Grammar: Parsing is based on the syntax rules the document obeys: the language or format it was written in. Every format you can parse must have deterministic grammar consisting of vocabulary and syntax rules. It is called a context free grammar.  
+Grammar: Parsing is based on the syntax rules the document obeys: the language or format it was written in. Every format you can parse must have deterministic grammar consisting of vocabulary and syntax rules. It is called a **context free grammar**.  
 
 Parsing can be separated into two sub processes: lexical analysis and syntax analysis.
               
@@ -79,9 +79,34 @@ The parsing process is iterative. The parser will usually ask the lexer for a ne
 
 If no rule matches, the parser will store the token internally, and keep asking for tokens until a rule matching all the internally stored tokens is found. If no rule is found then the parser will raise an exception. This means the document was not valid and contained syntax errors.
 
+The job of the HTML parser is to parse the HTML markup into a parse tree. HTML definition is in a DTD (Document Type Definition) format. This format is used to define languages of the SGML family. The format contains definitions for all allowed elements, their attributes and hierarchy. As we saw earlier, the HTML DTD doesn't form a context free grammar.
 
+HTML parsing algorithm consists of two stages: tokenization and tree construction.
 
+Tokenization is the lexical analysis, parsing the input into tokens. Among HTML tokens are start tags, end tags, attribute names and attribute values. The tokenizer recognizes the token, gives it to the tree constructor, and consumes the next character for recognizing the next token, and so on until the end of the input.
 
+![HTML parsing flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image017.png)
+
+## DOM
+
+The output tree (the "parse tree") is a tree of DOM element and attribute nodes. DOM is short for Document Object Model. It is the object presentation of the HTML document and the interface of HTML elements to the outside world like JavaScript. The root of the tree is the "Document" object.
+
+The DOM has an almost one-to-one relation to the markup. For example:
+
+```html
+<html>
+  <body>
+    <p>
+      Hello World
+    </p>
+    <div> <img src="example.png"/></div>
+  </body>
+</html> This markup would be translated to the following DOM tree:
+```
+
+This markup would be translated to the following DOM tree:
+
+![DOM Tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image015.png)
 
 
 *More reading:*
