@@ -190,6 +190,23 @@ Like layout, painting can also be global–the entire tree is painted–or incre
 
 Before repainting, WebKit saves the old rectangle as a bitmap. It then paints only the delta between the new and old rectangles. The browsers try to do the minimal possible actions in response to a change. So changes to an elements color will cause only repaint of the element. Changes to the element position will cause layout and repaint of the element, its children and possibly siblings. Adding a DOM node will cause layout and repaint of the node. Major changes, like increasing font size of the "html" element, will cause invalidation of caches, relayout and repaint of the entire tree.
 
+There are three different positioning schemes:
+
+* **Normal:** the object is positioned according to its place in the document. This means its place in the render tree is like its place in the DOM tree and laid out according to its box type and dimensions
+* **Float:** the object is first laid out like normal flow, then moved as far left or right as possible
+* **Absolute:** the object is put in the render tree in a different place than in the DOM tree
+
+The positioning scheme is set by the "position" property and the "float" attribute.
+
+- static and relative cause a normal flow
+- absolute and fixed cause absolute positioning
+
+In static positioning no position is defined and the default positioning is used. In the other schemes, the author specifies the position: top, bottom, left, right.
+
+**Layers** are specified by the z-index CSS property. It represents the third dimension of the box: its position along the "z axis".
+
+The boxes are divided into stacks (called stacking contexts). In each stack the back elements will be painted first and the forward elements on top, closer to the user. In case of overlap the foremost element will hide the former element. The stacks are ordered according to the z-index property. Boxes with "z-index" property form a local stack.
+
 *More reading:*
 
 [How Browsers Work: Behind the scenes of modern web browsers](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
