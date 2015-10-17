@@ -57,10 +57,27 @@ It's important to understand that this is a gradual process. For better user exp
 
 Given below is Webkit's flow:
 
-![Webit main flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/webkitflow.png)
+![Webkit main flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/webkitflow.png)
 
+## Parsing Basics
 
+Parsing: Translating the document to a structure the code can use. The result of parsing is usually a tree of nodes that represent the structure of the document.
+ 
+Grammar: Parsing is based on the syntax rules the document obeys: the language or format it was written in. Every format you can parse must have deterministic grammar consisting of vocabulary and syntax rules. It is called a context free grammar.  
 
+Parsing can be separated into two sub processes: lexical analysis and syntax analysis.
+              
+Lexical analysis: The process of breaking the input into tokens. Tokens are the language vocabulary: the collection of valid building blocks.
+
+Syntax analysis: The applying of the language syntax rules.
+
+Parsers usually divide the work between two components: the lexer (sometimes called tokenizer) that is responsible for breaking the input into valid tokens, and the parser that is responsible for constructing the parse tree by analyzing the document structure according to the language syntax rules. The lexer knows how to strip irrelevant characters like white spaces and line breaks.
+
+![Source document to parse tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image011.png)
+
+The parsing process is iterative. The parser will usually ask the lexer for a new token and try to match the token with one of the syntax rules. If a rule is matched, a node corresponding to the token will be added to the parse tree and the parser will ask for another token.
+
+If no rule matches, the parser will store the token internally, and keep asking for tokens until a rule matching all the internally stored tokens is found. If no rule is found then the parser will raise an exception. This means the document was not valid and contained syntax errors.
 
 
 
