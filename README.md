@@ -25,14 +25,14 @@ Note: Browsers such as Chrome run multiple instances of the rendering engine: on
 
 A rendering engine is a software component that takes marked up content (such as HTML, XML, image files, etc.) and formatting information (such as CSS, XSL, etc.) and displays the formatted content on the screen.
 
-Browser           |  Engine | Current
------------------ | -------------
-Chrome            | Blink (a fork of WebKit)
-Firefox           | Gecko
-Safari            | Webkit
-Opera             | Blink (pre v15 uses Presto)
-Internet Explorer | Trident
-Edge              | EdgeHTML
+|Browser           |Engine                       |
+|----------------- |:---------------------------:|
+|Chrome            | Blink (a fork of WebKit)    |
+|Firefox           | Gecko                       |
+|Safari            | Webkit                      |
+|Opera             | Blink (Presto if < v15) |
+|Internet Explorer | Trident                     |
+|Edge              | EdgeHTML                    |  
 
 WebKit is an open source rendering engine which started as an engine for the Linux platform and was modified by Apple to support Mac and Windows.
 
