@@ -17,7 +17,9 @@ What happens behind the scenes when we type www.google.com in a browser?
 
 7. **Data Storage:** This is a persistence layer. The broswer may need to save data locally, such as cookies. Browsers also support storage mechanisms such as [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB) and [FileSystem](https://developer.chrome.com/apps/fileSystem).
 
-![Browser Components](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/layers.png)
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/layers.png" alt="Browser Components"/>
+</p>
 
 Note: Browsers such as Chrome run multiple instances of the rendering engine: one for each tab. Each tab runs in a separate process.
 
@@ -47,7 +49,9 @@ The rendering engine will start getting the contents of the requested document f
 
 After that the basic flow of the rendering engine is:
 
-![Rendering engine basic flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/flow.png)
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/flow.png" alt="Rendering engine basic flow"/>
+</p>
 
 The rendering engine will start parsing the HTML document and convert elements to [DOM](http://domenlightenment.com/) nodes in a tree called the **"content tree"**. 
 
@@ -62,7 +66,9 @@ It's important to understand that this is a gradual process. For better user exp
 
 Given below is Webkit's flow:
 
-![Webkit main flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/webkitflow.png)
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/webkitflow.png" alt="Webkit main flow"/>
+</p>
 
 ## Parsing Basics
 
@@ -78,7 +84,9 @@ Parsing can be separated into two sub processes: lexical analysis and syntax ana
 
 Parsers usually divide the work between two components: the lexer (sometimes called tokenizer) that is responsible for breaking the input into valid tokens, and the parser that is responsible for constructing the parse tree by analyzing the document structure according to the language syntax rules. The lexer knows how to strip irrelevant characters like white spaces and line breaks.
 
-![Source document to parse tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image011.png)
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image011.png" alt="Source document to parse tree"/>
+</p>
 
 The parsing process is iterative. The parser will usually ask the lexer for a new token and try to match the token with one of the syntax rules. If a rule is matched, a node corresponding to the token will be added to the parse tree and the parser will ask for another token.
 
@@ -90,7 +98,9 @@ HTML parsing algorithm consists of two stages: tokenization and tree constructio
 
 **Tokenization** is the lexical analysis, parsing the input into tokens. Among HTML tokens are start tags, end tags, attribute names and attribute values. The tokenizer recognizes the token, gives it to the tree constructor, and consumes the next character for recognizing the next token, and so on until the end of the input.
 
-![HTML parsing flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image017.png)
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image017.png" alt="HTML parsing flow"/>
+</p>
 
 ## DOM Tree
 
@@ -111,7 +121,9 @@ The DOM has an almost one-to-one relation to the markup. For example:
 
 This markup would be translated to the following DOM tree:
 
-![DOM Tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image015.png)
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image015.png" alt="DOM Tree"/>
+</p>
 
 ## Render Tree
 
@@ -126,8 +138,10 @@ The renderers correspond to DOM elements, but the relation is not one to one. No
 There are DOM elements which correspond to several visual objects. These are usually elements with complex structure that cannot be described by a single rectangle. For example, the "select" element has three renderers: one for the display area, one for the drop down list box and one for the button. Also when text is broken into multiple lines because the width is not sufficient for one line, the new lines will be added as extra renderers.
  
 Some render objects correspond to a DOM node but not in the same place in the tree. Floats and absolutely positioned elements are out of flow, placed in a different part of the tree, and mapped to the real frame. A placeholder frame is where they should have been.
- 
-![The render tree and the corresponding DOM tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image025.png)
+
+<p align="center">
+  <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image025.png" alt="The render tree and the corresponding DOM tree"/>
+</p>
  
 In WebKit the process of resolving the style and creating a renderer is called "attachment". Every DOM node has an "attach" method. Attachment is synchronous, node insertion to the DOM tree calls the new node "attach" method.
 
