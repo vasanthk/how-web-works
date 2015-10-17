@@ -87,7 +87,7 @@ Tokenization is the lexical analysis, parsing the input into tokens. Among HTML 
 
 ![HTML parsing flow](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image017.png)
 
-## DOM
+## DOM Tree
 
 The output tree (the "parse tree") is a tree of DOM element and attribute nodes. DOM is short for Document Object Model. It is the object presentation of the HTML document and the interface of HTML elements to the outside world like JavaScript. The root of the tree is the "Document" object.
 
@@ -108,6 +108,59 @@ This markup would be translated to the following DOM tree:
 
 ![DOM Tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image015.png)
 
+## Render Tree
+
+While the DOM tree is being constructed, the browser constructs another tree, the render tree. This tree is of visual elements in the order in which they will be displayed. It is the visual representation of the document. The purpose of this tree is to enable painting the contents in their correct order.
+
+A renderer knows how to lay out and paint itself and its children. Each renderer represents a rectangular area usually corresponding to a node's CSS box.
+
+## Render tree's relation to the DOM tree
+
+The renderers correspond to DOM elements, but the relation is not one to one. Non-visual DOM elements will not be inserted in the render tree. An example is the "head" element. Also elements whose display value was assigned to "none" will not appear in the tree (whereas elements with "hidden" visibility will appear in the tree).
+
+There are DOM elements which correspond to several visual objects. These are usually elements with complex structure that cannot be described by a single rectangle. For example, the "select" element has three renderers: one for the display area, one for the drop down list box and one for the button. Also when text is broken into multiple lines because the width is not sufficient for one line, the new lines will be added as extra renderers.
+ 
+Some render objects correspond to a DOM node but not in the same place in the tree. Floats and absolutely positioned elements are out of flow, placed in a different part of the tree, and mapped to the real frame. A placeholder frame is where they should have been.
+ 
+![The render tree and the corresponding DOM tree](http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image025.png)
+ 
+In WebKit the process of resolving the style and creating a renderer is called "attachment". Every DOM node has an "attach" method. Attachment is synchronous, node insertion to the DOM tree calls the new node "attach" method.
+
+Building the render tree requires calculating the visual properties of each render object. This is done by calculating the style properties of each element. The style includes style sheets of various origins, inline style elements and visual properties in the HTML (like the "bgcolor" property).The later is translated to matching CSS style properties.
+
+## CSS Parsing
+
+CSS Selectors are matched by browser engines from right to left. Keep in mind that when a browser is doing selector matching it has one element (the one it's trying to determine style for) and all your rules and their selectors and it needs to find which rules match the element. This is different from the usual jQuery thing, say, where you only have one selector and you need to find all the elements that match that selector.
+
+A selector's specificity is calculated as follows:
+
+* Count 1 if the declaration it is from is a 'style' attribute rather than a rule with a selector, 0 otherwise (= a)
+* Count the number of ID selectors in the selector (= b)
+* Count the number of class selectors, attributes selectors, and pseudo-classes in the selector (= c)
+* Count the number of element names and pseudo-elements in the selector (= d)
+* Ignore the universal selector
+
+Concatenating the three numbers a-b-c-d (in a number system with a large base) gives the specificity. The number base you need to use is defined by the highest count you have in one of a, b, c and d.
+ 
+Examples:
+
+- *               /* a=0 b=0 c=0 -> specificity =   0 */
+- LI              /* a=0 b=0 c=1 -> specificity =   1 */
+- UL LI           /* a=0 b=0 c=2 -> specificity =   2 */
+- UL OL+LI        /* a=0 b=0 c=3 -> specificity =   3 */
+- H1 + *[REL=up]  /* a=0 b=1 c=1 -> specificity =  11 */
+- UL OL LI.red    /* a=0 b=1 c=3 -> specificity =  13 */
+- LI.red.level    /* a=0 b=2 c=1 -> specificity =  21 */
+- #x34y           /* a=1 b=0 c=0 -> specificity = 100 */
+- #s12:not(FOO)   /* a=1 b=0 c=1 -> specificity = 101 */
+ 
+WebKit uses a flag that marks if all top level style sheets (including @imports) have been loaded. If the style is not fully loaded when attaching, place holders are used and it is marked in the document, and they will be recalculated once the style sheets were loaded. 
+
+
+
+
+ 
+ 
 
 *More reading:*
 
