@@ -113,6 +113,14 @@ If the HTML referenced a resource on a different domain than www.google.com, the
 * The server might respond with a 301 Moved Permanently response to tell the browser to go to “http://www.google.com/” instead of “http://google.com/”. There are interesting reasons why the server insists on the redirect instead of immediately responding with the web page that the user wants to see.
 One reason has to do with search engine rankings. See, if there are two URLs for the same page, say http://www.vasanth.com/ and http://vasanth.com/, search engine may consider them to be two different sites, each with fewer incoming links and thus a lower ranking. Search engines understand permanent redirects (301), and will combine the incoming links from both sources into a single ranking. 
 Also, multiple URLs for the same content are not cache-friendly. When a piece of content has multiple names, it will potentially appear multiple times in caches.
+
+**Note:**
+HTTP response starts with the returned status code from the server. Following is a very brief summary of what a status code denotes:        
+        1xx indicates an informational message only
+        2xx indicates success of some kind
+        3xx redirects the client to another URL
+        4xx indicates an error on the client's part
+        5xx indicates an error on the server's part
  
 ## HTTP Server Request Handle
 
