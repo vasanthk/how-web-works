@@ -116,11 +116,11 @@ Also, multiple URLs for the same content are not cache-friendly. When a piece of
 
 **Note:**
 HTTP response starts with the returned status code from the server. Following is a very brief summary of what a status code denotes:        
-        1xx indicates an informational message only
-        2xx indicates success of some kind
-        3xx redirects the client to another URL
-        4xx indicates an error on the client's part
-        5xx indicates an error on the server's part
+  * 1xx indicates an informational message only
+  * 2xx indicates success of some kind
+  * 3xx redirects the client to another URL
+  * 4xx indicates an error on the client's part
+  * 5xx indicates an error on the server's part
  
 ## HTTP Server Request Handle
 
