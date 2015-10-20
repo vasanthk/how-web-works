@@ -89,7 +89,7 @@ Most of the DNS servers themselves use anycast to achieve high availability and 
 
 ## Opening of a socket + TLS handshake
 
-* Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (the HTTP protocol defaults to port 80, and HTTPS to port 443), and makes a call to the system library function named socket and requests a TCP socket stream.
+* Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (the HTTP protocol defaults to port 80, and HTTPS to port 443), and makes a call to the system library function named socket and requests a [TCP](http://www.webopedia.com/TERM/T/TCP.html) [socket](http://www.webopedia.com/TERM/S/socket.html) stream.
 * The client computer sends a ClientHello message to the server with its TLS version, list of cipher algorithms and compression methods available.
 * The server replies with a ServerHello message to the client with the TLS version, selected cipher, selected compression methods and the server's public certificate signed by a CA (Certificate Authority). The certificate contains a public key that will be used by the client to encrypt the rest of the handshake until a symmetric key can be agreed upon.
 * The client verifies the server digital certificate against its list of trusted CAs. If trust can be established based on the CA, the client generates a string of pseudo-random bytes and encrypts this with the server's public key. These random bytes can be used to determine the symmetric key.
