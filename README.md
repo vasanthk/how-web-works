@@ -2,11 +2,35 @@
 
 What happens behind the scenes when we type google.com in a browser?
 
-## The "g" key is pressed
+**Table of Contents**
+
+- [Google's "g" key is pressed](#)
+- [The "enter" key bottoms out](#)
+- [Parse the URL](#)
+- [Check HSTS list](#)
+- [DNS lookup](#)
+- [Opening of a socket + TLS handshake](#)
+- [HTTP protocol](#)
+- [HTTP Server Request Handle](#)
+- [Server Response](#)
+- [Behind the scenes of the Browser](#)
+- [The browser's high level structure](#)
+- [Rendering Engine](#)
+- [The Main flow](#)
+- [Parsing Basics](#)
+- [DOM Tree](#)
+- [Render Tree](#)
+- [Render tree's relation to the DOM tree](#)
+- [CSS Parsing](#)
+- [Layout](#)
+- [Painting](#)
+- [Trivia](#)
+
+## Google's 'g' key is pressed
 
 When you just press "g" the browser receives the event and the entire auto-complete machinery kicks into high gear. Depending on your browser's algorithm and if you are in private/incognito mode or not various suggestions will be presented to you in the dropbox below the URL bar. Most of these algorithms prioritize results based on search history and bookmarks. You are going to type "google.com" so none of it matters, but a lot of code will run before you get there and the suggestions will be refined with each key press. It may even suggest "google.com" before you type it.
 
-## The "enter" key bottoms out
+## When you hit 'Enter'
 
 To pick a zero point, let's choose the Enter key on the keyboard hitting the bottom of its range. At this point, an electrical circuit specific to the enter key is closed (either directly or capacitively). This allows a small amount of current to flow into the logic circuitry of the keyboard, which scans the state of each key switch, debounces the electrical noise of the rapid intermittent closure of the switch, and converts it to a keycode integer, in this case 13. The keyboard controller then encodes the keycode for transport to the computer. This is now almost universally over a Universal Serial Bus (USB) or Bluetooth connection.
 
