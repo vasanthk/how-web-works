@@ -226,7 +226,7 @@ Once the server supplies the resources (HTML, CSS, JS, images, etc.) to the brow
 
 6. **JavaScript Engine:** Interpreter used to parse and execute JavaScript code.
 
-7. **Data Storage:** This is a persistence layer. The broswer may need to save data locally, such as cookies. Browsers also support storage mechanisms such as [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB) and [FileSystem](https://developer.chrome.com/apps/fileSystem).
+7. **Data Storage:** This is a persistence layer. The browser may need to save data locally, such as cookies. Browsers also support storage mechanisms such as [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB) and [FileSystem](https://developer.chrome.com/apps/fileSystem).
 
 <p align="center">
   <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/layers.png" alt="Browser Components"/>
@@ -442,7 +442,7 @@ Tim Berners-Lee, a British scientist at CERN, invented the World Wide Web (WWW) 
 
 The first website at CERN - and in the world - was dedicated to the World Wide Web project itself and was hosted on Berners-Lee's NeXT computer. The website described the basic features of the web; how to access other people's documents and how to set up your own server. The NeXT machine - the original web server - is still at CERN. As part of the project to restore [the first website](http://info.cern.ch/), in 2013 CERN reinstated the world's first website to its original address.
 
-On 30 April 1993 CERN put the World Wide Web software in the public domain. CERN made the next release available with an open licence, as a more sure way to maximise its dissemination. Through these actions, making the software required to run a web server freely available, along with a [basic browser](http://line-mode.cern.ch/) and a library of code, the web was allowed to flourish.
+On 30 April 1993 CERN put the World Wide Web software in the public domain. CERN made the next release available with an open license, as a more sure way to maximize its dissemination. Through these actions, making the software required to run a web server freely available, along with a [basic browser](http://line-mode.cern.ch/) and a library of code, the web was allowed to flourish.
 
 *More reading:*
 
