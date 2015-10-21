@@ -327,7 +327,7 @@ The DOM has an almost one-to-one relation to the markup. For example:
     </p>
     <div> <img src="example.png"/></div>
   </body>
-</html> This markup would be translated to the following DOM tree:
+</html>
 ```
 
 This markup would be translated to the following DOM tree:
