@@ -466,3 +466,5 @@ On 30 April 1993 CERN put the World Wide Web software in the public domain. CERN
 [What exactly happens when you browse a website in your browser?](http://superuser.com/questions/31468/what-exactly-happens-when-you-browse-a-website-in-your-browser)
 
 [What happens when](https://github.com/alex/what-happens-when)
+
+[So how does the browser actually render a website](https://www.youtube.com/watch?v=SmE4OwHztCc)
