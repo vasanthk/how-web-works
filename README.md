@@ -232,7 +232,29 @@ Once the server supplies the resources (HTML, CSS, JS, images, etc.) to the brow
   <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/layers.png" alt="Browser Components"/>
 </p>
 
-Note: Browsers such as Chrome run multiple instances of the rendering engine: one for each tab. Each tab runs in a separate process.
+Let’s start, with the simplest possible case: a plain HTML page with some text and a single image. What does the browser need to do to process this simple page?
+
+1. **Conversion:** the browser reads the raw bytes of the HTML off the disk or network and translates them to individual characters based on specified encoding of the file (e.g. UTF-8).
+
+2. **Tokenizing:** the browser converts strings of characters into distinct tokens specified by the W3C HTML5 standard - e.g. “<html>”, “<body>” and other strings within the “angle brackets”. Each token has a special meaning and a set of rules.
+
+3. **Lexing:** the emitted tokens are converted into “objects” which define their properties and rules.
+
+4. **DOM construction:** Finally, because the HTML markup defines relationships between different tags (some tags are contained within tags) the created objects are linked in a tree data structure that also captures the parent-child relationships defined in the original markup: HTML object is a parent of the body object, the body is a parent of the paragraph object, and so on.
+
+<p align="center">
+  <img src="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/images/full-process.png" alt="DOM Construction Process"/>
+</p>
+
+The final output of this entire process is the Document Object Model, or the “DOM” of our simple page, which the browser uses for all further processing of the page.
+
+Every time the browser has to process HTML markup it has to step through all of the steps above: convert bytes to characters, identify tokens, convert tokens to nodes, and build the DOM tree. This entire process can take some time, especially if we have a large amount of HTML to process.
+
+<p align="center">
+  <img src="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/images/dom-timeline.png" alt="Tracing DOM construction in DevTools"/>
+</p>
+
+If you open up Chrome DevTools and record a timeline while the page is loaded, you can see the actual time taken to perform this step — in the example above, it took us ~5ms to convert a chunk of HTML bytes into a DOM tree. Of course, if the page was larger, as most pages are, this process might take significantly longer. You will see in our future sections on creating smooth animations that this can easily become your bottleneck if the browser has to process large amounts of HTML.
 
 ## Rendering Engine
 
@@ -253,6 +275,8 @@ The rendering engine is single threaded. Almost everything, except network opera
 Network operations can be performed by several parallel threads. The number of parallel connections is limited (usually 2–6 connections).
 
 The browser main thread is an event loop. It's an infinite loop that keeps the process alive. It waits for events (like layout and paint events) and processes them.
+
+Note: Browsers such as Chrome run multiple instances of the rendering engine: one for each tab. Each tab runs in a separate process.
 
 ## The Main flow
 
@@ -468,3 +492,5 @@ On 30 April 1993 CERN put the World Wide Web software in the public domain. CERN
 [What happens when](https://github.com/alex/what-happens-when)
 
 [So how does the browser actually render a website](https://www.youtube.com/watch?v=SmE4OwHztCc)
+
+[Constructing the Object Model](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model)
