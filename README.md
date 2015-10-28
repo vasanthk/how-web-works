@@ -420,6 +420,8 @@ LI.red.level    /* a=0 b=2 c=1 -> specificity =  21 */
 #x34y           /* a=1 b=0 c=0 -> specificity = 100 */
 #s12:not(FOO)   /* a=1 b=0 c=1 -> specificity = 101 */
 ``` 
+
+Why does the CSSOM have a tree structure? When computing the final set of styles for any object on the page, the browser starts with the most general rule applicable to that node (e.g. if it is a child of body element, then all body styles apply) and then recursively refines the computed styles by applying more specific rules - i.e. the rules “cascade down”. 
  
 WebKit uses a flag that marks if all top level style sheets (including @imports) have been loaded. If the style is not fully loaded when attaching, place holders are used and it is marked in the document, and they will be recalculated once the style sheets were loaded. 
 
