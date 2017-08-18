@@ -272,7 +272,7 @@ A rendering engine is a software component that takes marked up content (such as
 WebKit is an open source rendering engine which started as an engine for the Linux platform and was modified by Apple to support Mac and Windows.
 
 The rendering engine is single threaded. Almost everything, except network operations, happens in a single thread. In Firefox and Safari this is the main thread of the browser. In Chrome it's the tab process main thread. 
-Network operations can be performed by several parallel threads. The number of parallel connections is limited (usually 2–6 connections).
+Network operations can be performed by several parallel threads. The number of parallel connections is limited (usually 6-13 connections per hostname).
 
 The browser main thread is an event loop. It's an infinite loop that keeps the process alive. It waits for events (like layout and paint events) and processes them.
 
