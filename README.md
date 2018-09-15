@@ -20,7 +20,7 @@ What happens behind the scenes when we type google.com in a browser?
 - [Parsing Basics](#parsing-basics)
 - [DOM Tree](#dom-tree)
 - [Render Tree](#render-tree)
-- [Render tree's relation to the DOM tree](#)
+- [Render tree's relation to the DOM tree](#render-trees-relation-to-the-dom-tree)
 - [CSS Parsing](#css-parsing)
 - [Layout](#layout)
 - [Painting](#painting)
