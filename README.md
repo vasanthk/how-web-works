@@ -272,7 +272,7 @@ A rendering engine is a software component that takes marked up content (such as
 |Safari            | Webkit                      |
 |Opera             | Blink (Presto if < v15)     |
 |Internet Explorer | Trident                     |
-|Edge              | EdgeHTML                    |
+|Edge              | Blink (EdgeHTML if < v79)   |
 
 WebKit is an open source rendering engine which started as an engine for the Linux platform and was modified by Apple to support Mac and Windows.
 
