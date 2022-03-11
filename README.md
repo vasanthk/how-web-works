@@ -7,7 +7,7 @@ What happens behind the scenes when we type google.com in a browser?
 - [Google's 'g' key is pressed](#googles-g-key-is-pressed)
 - [When you hit 'Enter'](#when-you-hit-enter)
 - [Parse the URL](#parse-the-url)
-- [Check HSTS list](#check-hsts-list)
+- [Check HSTS list (deprected)](#check-hsts-list-deprected)
 - [DNS lookup](#dns-lookup)
 - [Opening of a socket + TLS handshake](#opening-of-a-socket--tls-handshake)
 - [HTTP protocol](#http-protocol)
@@ -19,12 +19,14 @@ What happens behind the scenes when we type google.com in a browser?
 - [The Main flow](#the-main-flow)
 - [Parsing Basics](#parsing-basics)
 - [DOM Tree](#dom-tree)
+  - [Why is the DOM slow?](#why-is-the-dom-slow)
 - [Render Tree](#render-tree)
 - [Render tree's relation to the DOM tree](#render-trees-relation-to-the-dom-tree)
 - [CSS Parsing](#css-parsing)
 - [Layout](#layout)
 - [Painting](#painting)
 - [Trivia](#trivia)
+  - [The birth of the web](#the-birth-of-the-web)
 
 ## Google's 'g' key is pressed
 
@@ -38,7 +40,7 @@ In the case of the USB keyboard:
 * The keycode generated is stored by internal keyboard circuitry memory in a register called "endpoint".
 * The host USB controller polls that "endpoint" every ~10ms, so it gets the keycode value stored on it.
 * This value goes to the USB SIE (Serial Interface Engine) sent at a maximum speed of 1.5 Mb/s (USB 2.0).
-* This serial signal is then decoded at the computer's host USB controller, and interpreted by the computer's Human Interface Device (HID) universal keyboard device driver. 
+* This serial signal is then decoded at the computer's host USB controller, and interpreted by the computer's Human Interface Device (HID) universal keyboard device driver.
 * The value of the key is then passed into the operating system's hardware abstraction layer.
 
 In the case of touch screen keyboards:
@@ -53,7 +55,7 @@ The browser now has the following information contained in the URL (Uniform Reso
 * Protocol "http": Use 'Hyper Text Transfer Protocol'
 * Resource "/": Retrieve main (index) page
 
-When no protocol or valid domain name is given the browser proceeds to feed the text given in the address box to the browser's default web search engine. 
+When no protocol or valid domain name is given the browser proceeds to feed the text given in the address box to the browser's default web search engine.
 
 ## Check HSTS list (deprected)
 
@@ -133,20 +135,20 @@ After parsing the HTML, the web browser (and server) repeats this process for ev
 
 If the HTML referenced a resource on a different domain than www.google.com, the web browser goes back to the steps involved in resolving the other domain, and follows all steps up to this point for that domain. The Host header in the request will be set to the appropriate server name instead of google.com.
 
-**Gotcha:** 
+**Gotcha:**
 * The trailing slash in the URL “http://facebook.com/” is important. In this case, the browser can safely add the slash. For URLs of the form http://example.com/folderOrFile, the browser cannot automatically add a slash, because it is not clear whether folderOrFile is a folder or a file. In such cases, the browser will visit the URL without the slash, and the server will respond with a redirect, resulting in an unnecessary roundtrip.
 * The server might respond with a 301 Moved Permanently response to tell the browser to go to “http://www.google.com/” instead of “http://google.com/”. There are interesting reasons why the server insists on the redirect instead of immediately responding with the web page that the user wants to see.
-One reason has to do with search engine rankings. See, if there are two URLs for the same page, say http://www.vasanth.com/ and http://vasanth.com/, search engine may consider them to be two different sites, each with fewer incoming links and thus a lower ranking. Search engines understand permanent redirects (301), and will combine the incoming links from both sources into a single ranking. 
+One reason has to do with search engine rankings. See, if there are two URLs for the same page, say http://www.vasanth.com/ and http://vasanth.com/, search engine may consider them to be two different sites, each with fewer incoming links and thus a lower ranking. Search engines understand permanent redirects (301), and will combine the incoming links from both sources into a single ranking.
 Also, multiple URLs for the same content are not cache-friendly. When a piece of content has multiple names, it will potentially appear multiple times in caches.
 
 **Note:**
-HTTP response starts with the returned status code from the server. Following is a very brief summary of what a status code denotes:        
+HTTP response starts with the returned status code from the server. Following is a very brief summary of what a status code denotes:
   * 1xx indicates an informational message only
   * 2xx indicates success of some kind
   * 3xx redirects the client to another URL
   * 4xx indicates an error on the client's part
   * 5xx indicates an error on the server's part
- 
+
 ## HTTP Server Request Handle
 
 The HTTPD (HTTP Daemon) server is the one handling the requests/responses on the server side. The most common HTTPD servers are Apache or nginx for Linux and IIS for Windows.
@@ -197,9 +199,9 @@ The entire response is 36 kB, the bulk of them in the byte blob at the end that 
 The **Content-Encoding** header tells the browser that the response body is compressed using the gzip algorithm. After decompressing the blob, you’ll see the HTML you’d expect:
 
 ```html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"   
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en" id="google" class=" no_js">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -210,7 +212,7 @@ The **Content-Encoding** header tells the browser that the response body is comp
 Notice the header that sets Content-Type to text/html. The header instructs the browser to render the response content as HTML, instead of say downloading it as a file. The browser will use the header to decide how to interpret the response, but will consider other factors as well, such as the extension of the URL.
 
 ## Behind the scenes of the Browser
-   
+
 Once the server supplies the resources (HTML, CSS, JS, images, etc.) to the browser it undergoes the below process:
 * Parsing - HTML, CSS, JS
 * Rendering - Construct DOM Tree → Render Tree → Layout of Render Tree → Painting the render tree
@@ -270,11 +272,11 @@ A rendering engine is a software component that takes marked up content (such as
 |Safari            | Webkit                      |
 |Opera             | Blink (Presto if < v15)     |
 |Internet Explorer | Trident                     |
-|Edge              | EdgeHTML                    |  
+|Edge              | Blink (EdgeHTML if < v79)   |
 
 WebKit is an open source rendering engine which started as an engine for the Linux platform and was modified by Apple to support Mac and Windows.
 
-The rendering engine is single threaded. Almost everything, except network operations, happens in a single thread. In Firefox and Safari this is the main thread of the browser. In Chrome it's the tab process main thread. 
+The rendering engine is single threaded. Almost everything, except network operations, happens in a single thread. In Firefox and Safari this is the main thread of the browser. In Chrome it's the tab process main thread.
 Network operations can be performed by several parallel threads. The number of parallel connections is limited (usually 6-13 connections per hostname).
 
 The browser main thread is an event loop. It's an infinite loop that keeps the process alive. It waits for events (like layout and paint events) and processes them.
@@ -291,7 +293,7 @@ After that the basic flow of the rendering engine is:
   <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/flow.png" alt="Rendering engine basic flow"/>
 </p>
 
-The rendering engine will start parsing the HTML document and convert elements to [DOM](http://domenlightenment.com/) nodes in a tree called the **"content tree"**. 
+The rendering engine will start parsing the HTML document and convert elements to [DOM](http://domenlightenment.com/) nodes in a tree called the **"content tree"**.
 
 The engine will parse the style data, both in external CSS files and in style elements. Styling information together with visual instructions in the HTML will be used to create another tree: the **render tree**.
 The render tree contains rectangles with visual attributes like color and dimensions. The rectangles are in the right order to be displayed on the screen.
@@ -311,11 +313,11 @@ Given below is Webkit's flow:
 ## Parsing Basics
 
 **Parsing:** Translating the document to a structure the code can use. The result of parsing is usually a tree of nodes that represent the structure of the document.
- 
-**Grammar:** Parsing is based on the syntax rules the document obeys: the language or format it was written in. Every format you can parse must have deterministic grammar consisting of vocabulary and syntax rules. It is called a **context free grammar**.  
+
+**Grammar:** Parsing is based on the syntax rules the document obeys: the language or format it was written in. Every format you can parse must have deterministic grammar consisting of vocabulary and syntax rules. It is called a **context free grammar**.
 
 Parsing can be separated into two sub processes: lexical analysis and syntax analysis.
-              
+
 **Lexical analysis:** The process of breaking the input into tokens. Tokens are the language vocabulary: the collection of valid building blocks.
 
 **Syntax analysis:** The applying of the language syntax rules.
@@ -385,13 +387,13 @@ A renderer knows how to lay out and paint itself and its children. Each renderer
 The renderers correspond to DOM elements, but the relation is not one to one. Non-visual DOM elements will not be inserted in the render tree. An example is the "head" element. Also elements whose display value was assigned to "none" will not appear in the tree (whereas elements with "hidden" visibility will appear in the tree).
 
 There are DOM elements which correspond to several visual objects. These are usually elements with complex structure that cannot be described by a single rectangle. For example, the "select" element has three renderers: one for the display area, one for the drop down list box and one for the button. Also when text is broken into multiple lines because the width is not sufficient for one line, the new lines will be added as extra renderers.
- 
+
 Some render objects correspond to a DOM node but not in the same place in the tree. Floats and absolutely positioned elements are out of flow, placed in a different part of the tree, and mapped to the real frame. A placeholder frame is where they should have been.
 
 <p align="center">
   <img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image025.png" alt="The render tree and the corresponding DOM tree"/>
 </p>
- 
+
 In WebKit the process of resolving the style and creating a renderer is called "attachment". Every DOM node has an "attach" method. Attachment is synchronous, node insertion to the DOM tree calls the new node "attach" method.
 
 Building the render tree requires calculating the visual properties of each render object. This is done by calculating the style properties of each element. The style includes style sheets of various origins, inline style elements and visual properties in the HTML (like the "bgcolor" property).The later is translated to matching CSS style properties.
@@ -409,7 +411,7 @@ A selector's specificity is calculated as follows:
 * Ignore the universal selector
 
 Concatenating the three numbers a-b-c-d (in a number system with a large base) gives the specificity. The number base you need to use is defined by the highest count you have in one of a, b, c and d.
- 
+
 Examples:
 
 ``` txt
@@ -422,11 +424,11 @@ UL OL LI.red    /* a=0 b=1 c=3 -> specificity =  13 */
 LI.red.level    /* a=0 b=2 c=1 -> specificity =  21 */
 #x34y           /* a=1 b=0 c=0 -> specificity = 100 */
 #s12:not(FOO)   /* a=1 b=0 c=1 -> specificity = 101 */
-``` 
+```
 
-Why does the CSSOM have a tree structure? When computing the final set of styles for any object on the page, the browser starts with the most general rule applicable to that node (e.g. if it is a child of body element, then all body styles apply) and then recursively refines the computed styles by applying more specific rules - i.e. the rules “cascade down”. 
- 
-WebKit uses a flag that marks if all top level style sheets (including @imports) have been loaded. If the style is not fully loaded when attaching, place holders are used and it is marked in the document, and they will be recalculated once the style sheets were loaded. 
+Why does the CSSOM have a tree structure? When computing the final set of styles for any object on the page, the browser starts with the most general rule applicable to that node (e.g. if it is a child of body element, then all body styles apply) and then recursively refines the computed styles by applying more specific rules - i.e. the rules “cascade down”.
+
+WebKit uses a flag that marks if all top level style sheets (including @imports) have been loaded. If the style is not fully loaded when attaching, place holders are used and it is marked in the document, and they will be recalculated once the style sheets were loaded.
 
 ## Layout
 
@@ -436,7 +438,7 @@ HTML uses a flow based layout model, meaning that most of the time it is possibl
 
 Layout is a recursive process. It begins at the root renderer, which corresponds to the <html> element of the HTML document. Layout continues recursively through some or all of the frame hierarchy, computing geometric information for each renderer that requires it.
 
-The position of the root renderer is 0,0 and its dimensions are the viewport–the visible part of the browser window. All renderers have a "layout" or "reflow" method, each renderer invokes the layout method of its children that need layout. 
+The position of the root renderer is 0,0 and its dimensions are the viewport–the visible part of the browser window. All renderers have a "layout" or "reflow" method, each renderer invokes the layout method of its children that need layout.
 
 In order not to do a full layout for every small change, browsers use a "dirty bit" system. A renderer that is changed or added marks itself and its children as "dirty": needing layout. There are two flags: "dirty", and "children are dirty" which means that although the renderer itself may be OK, it has at least one child that needs a layout.
 
@@ -455,7 +457,7 @@ Also note, layout thrashing is where a web browser has to reflow or repaint a we
 
 In the painting stage, the render tree is traversed and the renderer's "paint()" method is called to display content on the screen. Painting uses the UI infrastructure component.
 
-Like layout, painting can also be global–the entire tree is painted–or incremental. In incremental painting, some of the renderers change in a way that does not affect the entire tree. The changed renderer invalidates its rectangle on the screen. This causes the OS to see it as a "dirty region" and generate a "paint" event. The OS does it cleverly and coalesces several regions into one. 
+Like layout, painting can also be global–the entire tree is painted–or incremental. In incremental painting, some of the renderers change in a way that does not affect the entire tree. The changed renderer invalidates its rectangle on the screen. This causes the OS to see it as a "dirty region" and generate a "paint" event. The OS does it cleverly and coalesces several regions into one.
 
 Before repainting, WebKit saves the old rectangle as a bitmap. It then paints only the delta between the new and old rectangles. The browsers try to do the minimal possible actions in response to a change. So changes to an elements color will cause only repaint of the element. Changes to the element position will cause layout and repaint of the element, its children and possibly siblings. Adding a DOM node will cause layout and repaint of the node. Major changes, like increasing font size of the "html" element, will cause invalidation of caches, relayout and repaint of the entire tree.
 
