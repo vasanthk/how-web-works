@@ -7,7 +7,7 @@ What happens behind the scenes when we type google.com in a browser?
 - [Google's 'g' key is pressed](#googles-g-key-is-pressed)
 - [When you hit 'Enter'](#when-you-hit-enter)
 - [Parse the URL](#parse-the-url)
-- [Check HSTS list (deprected)](#check-hsts-list-deprected)
+- [Check HSTS list (deprecated)](#check-hsts-list-deprecated)
 - [DNS lookup](#dns-lookup)
 - [Opening of a socket + TLS handshake](#opening-of-a-socket--tls-handshake)
 - [HTTP protocol](#http-protocol)
@@ -57,7 +57,7 @@ The browser now has the following information contained in the URL (Uniform Reso
 
 When no protocol or valid domain name is given the browser proceeds to feed the text given in the address box to the browser's default web search engine.
 
-## Check HSTS list (deprected)
+## Check HSTS list (deprecated)
 
 * ~The browser checks its "preloaded HSTS (HTTP Strict Transport Security)" list. This is a list of websites that have requested to be contacted via HTTPS only.~
 * ~If the website is in the list, the browser sends its request via HTTPS instead of HTTP. Otherwise, the initial request is sent via HTTP.~
