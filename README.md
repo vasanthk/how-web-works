@@ -27,7 +27,7 @@ What happens behind the scenes when we type google.com in a browser?
 - [Painting](#painting)
 - [Trivia](#trivia)
   - [The birth of the web](#the-birth-of-the-web)
-- [When a file is downloaded or uploade](#download-or-upload)
+- [When a file is downloaded or uploaded](#download-or-upload)
 
 ## Google's 'g' key is pressed
 
@@ -489,7 +489,7 @@ The first website at CERN - and in the world - was dedicated to the World Wide W
 
 On 30 April 1993 CERN put the World Wide Web software in the public domain. CERN made the next release available with an open license, as a more sure way to maximize its dissemination. Through these actions, making the software required to run a web server freely available, along with a [basic browser](http://line-mode.cern.ch/) and a library of code, the web was allowed to flourish.
   
-###download-or-upload
+## download-or-upload
   What Does It Mean to Upload Something?
 In the context of the web, upload = send. You can think of it like loading the data "upward" to the cloud/internet.
 When you upload something to a website, or another user's computer, or a network location, etc., you're sending data from your device to the other device. Files can be uploaded to a server, such as a website, or directly to another device, like when using a file transfer utility.
