@@ -37,6 +37,7 @@ When you just press "g" the browser receives the event and the entire auto-compl
 To pick a zero point, let's choose the Enter key on the keyboard hitting the bottom of its range. At this point, an electrical circuit specific to the enter key is closed (either directly or capacitively). This allows a small amount of current to flow into the logic circuitry of the keyboard, which scans the state of each key switch, debounces the electrical noise of the rapid intermittent closure of the switch, and converts it to a keycode integer, in this case 13. The keyboard controller then encodes the keycode for transport to the computer. This is now almost universally over a Universal Serial Bus (USB) or Bluetooth connection.
 
 In the case of the USB keyboard:
+
 * The keycode generated is stored by internal keyboard circuitry memory in a register called "endpoint".
 * The host USB controller polls that "endpoint" every ~10ms, so it gets the keycode value stored on it.
 * This value goes to the USB SIE (Serial Interface Engine) sent at a maximum speed of 1.5 Mb/s (USB 2.0).
