@@ -241,7 +241,7 @@ Once the server supplies the resources (HTML, CSS, JS, images, etc.) to the brow
 7. **Data Storage:** This is a persistence layer. The browser may need to save data locally, such as cookies. Browsers also support storage mechanisms such as [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB) and [FileSystem](https://developer.chrome.com/apps/fileSystem).
 
 <p align="center">
-  <img src="./img/Browser Components.webp" alt="Browser Components"/>
+  <img src="./img/Browser components.webp" alt="Browser Components"/>
 </p>
 
 
