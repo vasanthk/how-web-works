@@ -27,6 +27,7 @@ What happens behind the scenes when we type google.com in a browser?
 - [Painting](#painting)
 - [Trivia](#trivia)
   - [The birth of the web](#the-birth-of-the-web)
+- [When a file is downloaded or uploaded](#download-or-upload)
 
 ## Google's 'g' key is pressed
 
@@ -487,6 +488,17 @@ Tim Berners-Lee, a British scientist at CERN, invented the World Wide Web (WWW) 
 The first website at CERN - and in the world - was dedicated to the World Wide Web project itself and was hosted on Berners-Lee's NeXT computer. The website described the basic features of the web; how to access other people's documents and how to set up your own server. The NeXT machine - the original web server - is still at CERN. As part of the project to restore [the first website](http://info.cern.ch/), in 2013 CERN reinstated the world's first website to its original address.
 
 On 30 April 1993 CERN put the World Wide Web software in the public domain. CERN made the next release available with an open license, as a more sure way to maximize its dissemination. Through these actions, making the software required to run a web server freely available, along with a [basic browser](http://line-mode.cern.ch/) and a library of code, the web was allowed to flourish.
+  
+## download-or-upload
+  What Does It Mean to Upload Something?
+In the context of the web, upload = send. You can think of it like loading the data "upward" to the cloud/internet.
+When you upload something to a website, or another user's computer, or a network location, etc., you're sending data from your device to the other device. Files can be uploaded to a server, such as a website, or directly to another device, like when using a file transfer utility.
+For example, if you upload an image to Facebook, you're sending the picture from your device to the Facebook website. The file started with you and ended up somewhere else, so it's considered an upload from your perspective.
+This is true for any transfer like this, no matter the file type or where it's going. You can upload documents to your teacher via email, upload a video to YouTube, upload music to your online music collection, etc.
+What Does It Mean to Download Something?
+In opposition to upload, download = save. You're taking data from elsewhere and putting it onto your device, essentially bringing it "down" from the internet.
+Downloading something from the web means that you're transferring data from the other location to your own device, whether it be your phone, computer, tablet, smartwatch, etc.
+
 
 *More reading:*
 
